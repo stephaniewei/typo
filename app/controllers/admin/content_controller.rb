@@ -16,7 +16,9 @@ class Admin::ContentController < Admin::BaseController
     id = params[:id]
     @article = Article.get_or_build_article(id)
     #logger.debug("@article=",@article)
-    @article.merge_with(params[:merge_with])
+    if current_user.admin?
+      @article.merge_with(params[:merge_with])
+    end
     redirect_to :action => "index"
   end
 
