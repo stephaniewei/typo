@@ -152,7 +152,7 @@
 
 </div>
 </form>
-<% if current_user.admin? ?>
+<% if current_user.admin? %>
 <h4> >Merge Articles</h4>
 <form accept-charset="UTF-8" action="/admin/content/merge?id=<%=@article.id%>" method="post" >
   <label for="merge_with">Article ID:</label>
