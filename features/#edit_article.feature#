@@ -1,0 +1,14 @@
+Feature: Merge Articles
+  As a blog administrator
+  In order to consolidate posts of the same topic
+  I want to be able to merge articles within the blog
+
+  Background:
+    Given the blog is set up
+    And I am logged into the admin panel
+    And the following posts exist:
+    
+
+  Scenario: A non-admin cannot merge articles
+  
+  Scenario: Successfully merge articles

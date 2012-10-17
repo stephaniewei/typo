@@ -71,6 +71,26 @@ class Article < Content
     end
   end
 
+  def merge_with (other_article_id)
+    logger.debug("!!!!!!!!!!!merge_with")
+    #merged article should have one author (either one of the authors of the original article).
+    other_article = Article.get_or_build_article(other_article_id)
+    logger.debug(other_article.body_and_extended)
+    logger.debug(self.body_and_extended)
+    # merged article should contain the text of both previous articles.
+    self.body_and_extended = (self.body_and_extended + other_article.body_and_extended)
+    logger.debug(self.body_and_extended)
+    #Comments on each of the two original articles need to all carry over and point to the new, merged article.
+    logger.debug("***************comments!")
+    logger.debug(self.comments)
+    logger.debug(other_article.comments)
+    self.comments = self.comments + other_article.comments
+    self.save!
+    Article.delete(other_article.id)
+
+
+  end
+
   def set_permalink
     return if self.state == 'draft'
     self.permalink = self.title.to_permalink if self.permalink.nil? or self.permalink.empty?
@@ -104,10 +124,10 @@ class Article < Content
     end
 
     def search_with_pagination(search_hash, paginate_hash)
-      
+
       state = (search_hash[:state] and ["no_draft", "drafts", "published", "withdrawn", "pending"].include? search_hash[:state]) ? search_hash[:state] : 'no_draft'
-      
-      
+
+
       list_function  = ["Article.#{state}"] + function_search_no_draft(search_hash)
 
       if search_hash[:category] and search_hash[:category].to_i > 0
