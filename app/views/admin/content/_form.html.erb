@@ -152,11 +152,10 @@
 
 </div>
 </form>
-<span  <%= "style='display: none;'" if current_user.name != 'admin'%> >
+
 <h4>Merge Articles</h4>
-<form accept-charset="UTF-8" action="/admin/content/merge?id=<%=@article.id%>" method="post">
+<form accept-charset="UTF-8" action="/admin/content/merge?id=<%=@article.id%>" method="post" <%= "style='display: none;'" if current_user.admin?  %> >
   <label for="merge_with">Article ID:</label>
   <input id="merge_with" name="merge_with" type="text" />
   <input name="commit" type="submit" value="Merge" />
 </form>
-</span>
