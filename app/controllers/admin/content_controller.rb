@@ -12,10 +12,10 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def merge
-    logger.debug("!!!!!!!!!!!!!!!!!!merge, params= #{params}")
+    #logger.debug("!!!!!!!!!!!!!!!!!!merge, params= #{params}")
     id = params[:id]
     @article = Article.get_or_build_article(id)
-    logger.debug("@article=",@article)
+    #logger.debug("@article=",@article)
     @article.merge_with(params[:merge_with])
     redirect_to :action => "index"
   end
